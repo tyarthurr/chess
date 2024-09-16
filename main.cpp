@@ -1,6 +1,7 @@
 /*
 OBJECTIVE:
-    - Make the pieces movable
+    - FUNCTION: display a semi transparent, yellow square on piece and available moves when there is a left mouse click on a piece's sprite space
+    - FUNCTION: when one of the yellow available move squares are clicked on, relocate chess piece to the board grid space accordingly
 */
 
 #include <iostream>
@@ -13,7 +14,7 @@ std::string parameterDisplay(sf::Vector2i parameter);
 int main()
 {
     sf::RenderWindow targetBoard(sf::VideoMode(800, 800), "Chess");
-    
+
     while (targetBoard.isOpen())
     {
         sf::Event event;
@@ -192,23 +193,23 @@ int main()
             sf::Vector2f blackQueenPosition = blackQueen.getPosition();
             sf::Vector2f blackKingPosition = blackKing.getPosition();
 
-            //temp parameter displays
-            sf::Vector2i cursorPositionRaw = sf::Mouse::getPosition(targetBoard);
-            std::string cursorPositionValue = parameterDisplay(cursorPositionRaw);
-            sf::Font cursorPositionFont;
-            sf::Text cursorPosition;
-            cursorPositionFont.loadFromFile("calibri-regular.ttf");
-            cursorPosition.setFont(cursorPositionFont);
-            cursorPosition.setString(cursorPositionValue);
-            cursorPosition.setCharacterSize(15);
-            cursorPosition.setFillColor(sf::Color::Green);
-            cursorPosition.setOutlineColor(sf::Color::Black);
-            cursorPosition.setOutlineThickness(2);
-            cursorPosition.setStyle(sf::Text::Bold);
-
-            //draw calls
+            //draw board
             targetBoard.clear(sf::Color::White);
             targetBoard.draw(chessBoard);
+
+            //player interaction
+            sf::Vector2i cursorPositionRaw = sf::Mouse::getPosition(targetBoard);
+            sf::Vector2f cursorPositionFloat = static_cast<sf::Vector2f>(cursorPositionRaw);
+            if ((sf::Mouse::isButtonPressed(sf::Mouse::Left) == true) || (cursorPositionFloat == whitePawn1Position))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 64));
+                moveSelection.setPosition(whitePawn1Position);
+                moveSelection.move(5.f, -3.f);
+                targetBoard.draw(moveSelection);
+            }
+
+            //draw pieces
             targetBoard.draw(whitePawn1);
             targetBoard.draw(whitePawn2);
             targetBoard.draw(whitePawn3);
@@ -242,8 +243,52 @@ int main()
             targetBoard.draw(blackQueen);
             targetBoard.draw(blackKing);
 
-            //overlay cursor position text and display game
+            //overlay cursor position and mouse input parameter logs
+            std::string cursorPositionValue = parameterDisplay(cursorPositionRaw);
+            sf::Font cursorPositionFont;
+            sf::Text cursorPosition;
+            cursorPositionFont.loadFromFile("calibri-regular.ttf");
+            cursorPosition.setFont(cursorPositionFont);
+            cursorPosition.setString(cursorPositionValue);
+            cursorPosition.setCharacterSize(15);
+            cursorPosition.setFillColor(sf::Color::Green);
+            cursorPosition.setOutlineColor(sf::Color::Black);
+            cursorPosition.setOutlineThickness(2);
+            cursorPosition.setStyle(sf::Text::Bold);
             targetBoard.draw(cursorPosition);
+
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true)
+            {
+                sf::Font leftMouseButtonLogFont;
+                sf::Text leftMouseButtonLog;
+                leftMouseButtonLogFont.loadFromFile("calibri-regular.ttf");
+                leftMouseButtonLog.setFont(leftMouseButtonLogFont);
+                leftMouseButtonLog.setString("Last Pressed: Left Mouse Button");
+                leftMouseButtonLog.setCharacterSize(15);
+                leftMouseButtonLog.setFillColor(sf::Color::Green);
+                leftMouseButtonLog.setOutlineColor(sf::Color::Black);
+                leftMouseButtonLog.setOutlineThickness(2);
+                leftMouseButtonLog.setStyle(sf::Text::Bold);
+                leftMouseButtonLog.setPosition(0.f, 35.f);
+                targetBoard.draw(leftMouseButtonLog);
+            }
+            else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) == true)
+            {
+                sf::Font rightMouseButtonLogFont;
+                sf::Text rightMouseButtonLog;
+                rightMouseButtonLogFont.loadFromFile("calibri-regular.ttf");
+                rightMouseButtonLog.setFont(rightMouseButtonLogFont);
+                rightMouseButtonLog.setString("Last Pressed: Right Mouse Button");
+                rightMouseButtonLog.setCharacterSize(15);
+                rightMouseButtonLog.setFillColor(sf::Color::Green);
+                rightMouseButtonLog.setOutlineColor(sf::Color::Black);
+                rightMouseButtonLog.setOutlineThickness(2);
+                rightMouseButtonLog.setStyle(sf::Text::Bold);
+                rightMouseButtonLog.setPosition(0.f, 35.f);
+                targetBoard.draw(rightMouseButtonLog);
+            }
+
+            //display game
             targetBoard.display();
         }
     }

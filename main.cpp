@@ -1,5 +1,6 @@
 /*
 OBJECTIVE:
+    - OPTIMISE: board grid rendering - potentially with for loop?
     - FUNCTION: display a semi transparent, yellow square on piece and available moves when there is a left mouse click on a piece's sprite space
     - FUNCTION: when one of the yellow available move squares are clicked on, relocate chess piece to the board grid space accordingly
 */
@@ -26,7 +27,6 @@ int main()
             }
 
             //textures
-            sf::Texture chessBoardImage;
             sf::Texture whitePawnImage;
             sf::Texture whiteRookImage;
             sf::Texture whiteKnightImage;
@@ -41,7 +41,6 @@ int main()
             sf::Texture blackKingImage;
 
             //sprites
-            sf::Sprite chessBoard;
             sf::Sprite whitePawn1;
             sf::Sprite whitePawn2;
             sf::Sprite whitePawn3;
@@ -76,7 +75,6 @@ int main()
             sf::Sprite blackKing;
 
             //texture image loading
-            chessBoardImage.loadFromFile("Black and White Chess Board.png");
             whitePawnImage.loadFromFile("w-pawn.png");
             whiteRookImage.loadFromFile("w-rook.png");
             whiteKnightImage.loadFromFile("w-knight.png");
@@ -91,7 +89,6 @@ int main()
             blackKingImage.loadFromFile("b-king.png");
 
             //sprite texture loading
-            chessBoard.setTexture(chessBoardImage);
             whitePawn1.setTexture(whitePawnImage);
             whitePawn2.setTexture(whitePawnImage);
             whitePawn3.setTexture(whitePawnImage);
@@ -193,23 +190,40 @@ int main()
             sf::Vector2f blackQueenPosition = blackQueen.getPosition();
             sf::Vector2f blackKingPosition = blackKing.getPosition();
 
+            //gameBoard of 192 vertices, making up 32 black chess squares with 2 triangles (6 vertices) each
+            sf::VertexArray boardGrid(sf::Triangles, 192);
+                //board vertices (number from the left .f, number from the top .f)
+            boardGrid[0].position = sf::Vector2f(100.f, 0.f);
+            boardGrid[1].position = sf::Vector2f(100.f, 100.f);
+            boardGrid[2].position = sf::Vector2f(200.f, 0.f);
+            boardGrid[3].position = sf::Vector2f(200.f, 0.f);
+            boardGrid[4].position = sf::Vector2f(200.f, 100.f);
+            boardGrid[5].position = sf::Vector2f(100.f, 100.f);
+                //board colors
+            boardGrid[0].color = sf::Color::Black;
+            boardGrid[1].color = sf::Color::Black;
+            boardGrid[2].color = sf::Color::Black;
+            boardGrid[3].color = sf::Color::Black;
+            boardGrid[4].color = sf::Color::Black;
+            boardGrid[5].color = sf::Color::Black;
+
             //draw board
             targetBoard.clear(sf::Color::White);
-            targetBoard.draw(chessBoard);
+            targetBoard.draw(boardGrid);
 
+            /*
             //player interaction
-            sf::Vector2i cursorPositionRaw = sf::Mouse::getPosition(targetBoard);
-            sf::Vector2f cursorPositionFloat = static_cast<sf::Vector2f>(cursorPositionRaw);
             if ((sf::Mouse::isButtonPressed(sf::Mouse::Left) == true) || (cursorPositionFloat == whitePawn1Position))
             {
                 sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
                 moveSelection.setFillColor(sf::Color(255, 255, 0, 64));
                 moveSelection.setPosition(whitePawn1Position);
-                moveSelection.move(5.f, -3.f);
                 targetBoard.draw(moveSelection);
             }
+            */
 
             //draw pieces
+            /*
             targetBoard.draw(whitePawn1);
             targetBoard.draw(whitePawn2);
             targetBoard.draw(whitePawn3);
@@ -242,8 +256,11 @@ int main()
             targetBoard.draw(blackBishop2);
             targetBoard.draw(blackQueen);
             targetBoard.draw(blackKing);
+            */
 
             //overlay cursor position and mouse input parameter logs
+            sf::Vector2i cursorPositionRaw = sf::Mouse::getPosition(targetBoard);
+            sf::Vector2f cursorPositionFloat = static_cast<sf::Vector2f>(cursorPositionRaw);
             std::string cursorPositionValue = parameterDisplay(cursorPositionRaw);
             sf::Font cursorPositionFont;
             sf::Text cursorPosition;

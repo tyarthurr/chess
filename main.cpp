@@ -614,17 +614,18 @@ int main()
             //draw board
             targetBoard.clear(sf::Color::White);
             targetBoard.draw(boardGrid);
-
-            /*
+         
             //player interaction
-            if ((sf::Mouse::isButtonPressed(sf::Mouse::Left) == true) || (cursorPositionFloat == whitePawn1Position))
+            sf::Vector2i cursorPositionRaw = sf::Mouse::getPosition(targetBoard);
+            sf::Vector2f cursorPositionFloat = static_cast<sf::Vector2f>(cursorPositionRaw);
+
+            if ((sf::Mouse::isButtonPressed(sf::Mouse::Left) == true) && (whitePawn1.getGlobalBounds().contains(cursorPositionFloat)))
             {
                 sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
                 moveSelection.setFillColor(sf::Color(255, 255, 0, 64));
                 moveSelection.setPosition(whitePawn1Position);
                 targetBoard.draw(moveSelection);
             }
-            */
 
             //draw pieces
             targetBoard.draw(whitePawn1);
@@ -661,8 +662,6 @@ int main()
             targetBoard.draw(blackKing);
 
             //overlay cursor position and mouse input parameter logs
-            sf::Vector2i cursorPositionRaw = sf::Mouse::getPosition(targetBoard);
-            sf::Vector2f cursorPositionFloat = static_cast<sf::Vector2f>(cursorPositionRaw);
             std::string cursorPositionValue = parameterDisplay(cursorPositionRaw);
             sf::Font cursorPositionFont;
             sf::Text cursorPosition;

@@ -1,8 +1,11 @@
 /*
 OBJECTIVE:
-    - REFACTOR: clean up code
-    - FUNCTION: display a semi transparent, yellow square on piece and available moves when there is a left mouse click on a piece's sprite space
-    - FUNCTION: when one of the yellow available move squares are clicked on, relocate chess piece to the board grid space accordingly
+    - FEATURE: dynamic method for displaying a semi transparent, yellow square on piece and available moves when there is a left mouse click on a piece's sprite space
+        - FIX: clicking on black king highlights all pieces. changing '<=' to '=' on line 1297 makes all pieces highlighted upon launching the program. 
+            changing moveSelection identifier to be unique did not affect behaviour. 
+            changing eventInstance and storedEventInstance ints to different variables did not affect behaviour.
+    - REFACTOR: implement modular OOP practices
+    - FIX: main() warning C6262 memory management
 */
 
 #include <iostream>
@@ -15,6 +18,8 @@ std::string parameterDisplay(sf::Vector2i parameter);
 int main()
 {
     sf::RenderWindow targetBoard(sf::VideoMode(800, 800), "Chess");
+    int eventInstance = 0;
+    int storedEventInstance = eventInstance + 1;
 
     while (targetBoard.isOpen())
     {
@@ -615,15 +620,688 @@ int main()
             targetBoard.clear(sf::Color::White);
             targetBoard.draw(boardGrid);
          
-            //player interaction
+            /*
+            player interaction
+                EXPLANATION:
+                eventInstance and storedEventInstance initialised outside of game loop.storedEventInstance is always 1 above the value of eventInstance
+                except if cursor is within whitePawn1 sprite bounds and LMB is clicked, then both variables are matched
+                if storedEventInstance is equal to or less than eventInstance, the move selection squares will be highlighted
+                at the end of every loop instance, both variables increase by 1
+            */
             sf::Vector2i cursorPositionRaw = sf::Mouse::getPosition(targetBoard);
             sf::Vector2f cursorPositionFloat = static_cast<sf::Vector2f>(cursorPositionRaw);
 
-            if ((sf::Mouse::isButtonPressed(sf::Mouse::Left) == true) && (whitePawn1.getGlobalBounds().contains(cursorPositionFloat)))
+            bool whitePawn1Selection = false;
+            bool whitePawn2Selection = false;
+            bool whitePawn3Selection = false;
+            bool whitePawn4Selection = false;
+            bool whitePawn5Selection = false;
+            bool whitePawn6Selection = false;
+            bool whitePawn7Selection = false;
+            bool whitePawn8Selection = false;
+            bool whiteRook1Selection = false;
+            bool whiteRook2Selection = false;
+            bool whiteKnight1Selection = false;
+            bool whiteKnight2Selection = false;
+            bool whiteBishop1Selection = false;
+            bool whiteBishop2Selection = false;
+            bool whiteQueenSelection = false;
+            bool whiteKingSelection = false;
+            bool blackPawn1Selection = false;
+            bool blackPawn2Selection = false;
+            bool blackPawn3Selection = false;
+            bool blackPawn4Selection = false;
+            bool blackPawn5Selection = false;
+            bool blackPawn6Selection = false;
+            bool blackPawn7Selection = false;
+            bool blackPawn8Selection = false;
+            bool blackRook1Selection = false;
+            bool blackRook2Selection = false;
+            bool blackKnight1Selection = false;
+            bool blackKnight2Selection = false;
+            bool blackBishop1Selection = false;
+            bool blackBishop2Selection = false;
+            bool blackQueenSelection = false;
+            bool blackKingSelection = false;
+            
+            //whitePawn1Selection
+            if (!(whitePawn1.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                whitePawn1Selection = false;
+            }
+            
+            if ((whitePawn1.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                whitePawn1Selection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (whitePawn1Selection = true))
             {
                 sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
-                moveSelection.setFillColor(sf::Color(255, 255, 0, 64));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
                 moveSelection.setPosition(whitePawn1Position);
+                targetBoard.draw(moveSelection);
+            }
+            //whitePawn2Selection
+            if (!(whitePawn2.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                whitePawn2Selection = false;
+            }
+
+            if ((whitePawn2.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                whitePawn2Selection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (whitePawn2Selection = true))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
+                moveSelection.setPosition(whitePawn2Position);
+                targetBoard.draw(moveSelection);
+            }
+            //whitePawn3Selection
+            if (!(whitePawn3.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                whitePawn3Selection = false;
+            }
+
+            if ((whitePawn3.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                whitePawn3Selection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (whitePawn3Selection = true))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
+                moveSelection.setPosition(whitePawn3Position);
+                targetBoard.draw(moveSelection);
+            }
+            //whitePawn4Selection
+            if (!(whitePawn4.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                whitePawn4Selection = false;
+            }
+
+            if ((whitePawn4.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                whitePawn4Selection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (whitePawn4Selection = true))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
+                moveSelection.setPosition(whitePawn4Position);
+                targetBoard.draw(moveSelection);
+            }
+            //whitePawn5Selection
+            if (!(whitePawn5.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                whitePawn5Selection = false;
+            }
+
+            if ((whitePawn5.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                whitePawn5Selection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (whitePawn5Selection = true))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
+                moveSelection.setPosition(whitePawn5Position);
+                targetBoard.draw(moveSelection);
+            }
+            //whitePawn6Selection
+            if (!(whitePawn6.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                whitePawn6Selection = false;
+            }
+
+            if ((whitePawn6.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                whitePawn6Selection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (whitePawn6Selection = true))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
+                moveSelection.setPosition(whitePawn6Position);
+                targetBoard.draw(moveSelection);
+            }
+            //whitePawn7Selection
+            if (!(whitePawn7.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                whitePawn7Selection = false;
+            }
+
+            if ((whitePawn7.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                whitePawn7Selection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (whitePawn7Selection = true))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
+                moveSelection.setPosition(whitePawn7Position);
+                targetBoard.draw(moveSelection);
+            }
+            //whitePawn8Selection
+            if (!(whitePawn8.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                whitePawn8Selection = false;
+            }
+
+            if ((whitePawn8.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                whitePawn8Selection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (whitePawn8Selection = true))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
+                moveSelection.setPosition(whitePawn8Position);
+                targetBoard.draw(moveSelection);
+            }
+            //whiteRook1Selection
+            if (!(whiteRook1.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                whiteRook1Selection = false;
+            }
+
+            if ((whiteRook1.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                whiteRook1Selection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (whiteRook1Selection = true))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
+                moveSelection.setPosition(whiteRook1Position);
+                targetBoard.draw(moveSelection);
+            }
+            //whiteRook2Selection
+            if (!(whiteRook2.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                whiteRook2Selection = false;
+            }
+
+            if ((whiteRook2.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                whiteRook2Selection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (whiteRook2Selection = true))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
+                moveSelection.setPosition(whiteRook2Position);
+                targetBoard.draw(moveSelection);
+            }
+            //whiteKnight1Selection
+            if (!(whiteKnight1.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                whiteKnight1Selection = false;
+            }
+
+            if ((whiteKnight1.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                whiteKnight1Selection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (whiteKnight1Selection = true))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
+                moveSelection.setPosition(whiteKnight1Position);
+                targetBoard.draw(moveSelection);
+            }
+            //whiteKnight2Selection
+            if (!(whiteKnight2.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                whiteKnight2Selection = false;
+            }
+
+            if ((whiteKnight2.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                whiteKnight2Selection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (whiteKnight2Selection = true))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
+                moveSelection.setPosition(whiteKnight2Position);
+                targetBoard.draw(moveSelection);
+            }
+            //whiteBishop1Selection
+            if (!(whiteBishop1.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                whiteBishop1Selection = false;
+            }
+
+            if ((whiteBishop1.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                whiteBishop1Selection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (whiteBishop1Selection = true))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
+                moveSelection.setPosition(whiteBishop1Position);
+                targetBoard.draw(moveSelection);
+            }
+            //whiteBishop2Selection
+            if (!(whiteBishop2.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                whiteBishop2Selection = false;
+            }
+
+            if ((whiteBishop2.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                whiteBishop2Selection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (whiteBishop2Selection = true))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
+                moveSelection.setPosition(whiteBishop2Position);
+                targetBoard.draw(moveSelection);
+            }
+            //whiteQueenSelection
+            if (!(whiteQueen.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                whiteQueenSelection = false;
+            }
+
+            if ((whiteQueen.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                whiteQueenSelection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (whiteQueenSelection = true))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
+                moveSelection.setPosition(whiteQueenPosition);
+                targetBoard.draw(moveSelection);
+            }
+            //whiteKingSelection
+            if (!(whiteKing.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                whiteKingSelection = false;
+            }
+
+            if ((whiteKing.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                whiteKingSelection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (whiteKingSelection = true))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
+                moveSelection.setPosition(whiteKingPosition);
+                targetBoard.draw(moveSelection);
+            }
+            //blackPawn1Selection
+            if (!(blackPawn1.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                blackPawn1Selection = false;
+            }
+
+            if ((blackPawn1.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                blackPawn1Selection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (blackPawn1Selection = true))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
+                moveSelection.setPosition(blackPawn1Position);
+                targetBoard.draw(moveSelection);
+            }
+            //blackPawn2Selection
+            if (!(blackPawn2.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                blackPawn2Selection = false;
+            }
+
+            if ((blackPawn2.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                blackPawn2Selection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (blackPawn2Selection = true))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
+                moveSelection.setPosition(blackPawn2Position);
+                targetBoard.draw(moveSelection);
+            }
+            //blackPawn3Selection
+            if (!(blackPawn3.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                blackPawn3Selection = false;
+            }
+
+            if ((blackPawn3.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                blackPawn3Selection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (blackPawn3Selection = true))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
+                moveSelection.setPosition(blackPawn3Position);
+                targetBoard.draw(moveSelection);
+            }
+            //blackPawn4Selection
+            if (!(blackPawn4.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                blackPawn4Selection = false;
+            }
+
+            if ((blackPawn4.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                blackPawn4Selection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (blackPawn4Selection = true))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
+                moveSelection.setPosition(blackPawn4Position);
+                targetBoard.draw(moveSelection);
+            }
+            //blackPawn5Selection
+            if (!(blackPawn5.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                blackPawn4Selection = false;
+            }
+
+            if ((blackPawn5.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                blackPawn5Selection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (blackPawn5Selection = true))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
+                moveSelection.setPosition(blackPawn5Position);
+                targetBoard.draw(moveSelection);
+            }
+            //blackPawn6Selection
+            if (!(blackPawn6.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                blackPawn6Selection = false;
+            }
+
+            if ((blackPawn6.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                blackPawn6Selection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (blackPawn6Selection = true))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
+                moveSelection.setPosition(blackPawn6Position);
+                targetBoard.draw(moveSelection);
+            }
+            //blackPawn7Selection
+            if (!(blackPawn7.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                blackPawn7Selection = false;
+            }
+
+            if ((blackPawn7.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                blackPawn7Selection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (blackPawn7Selection = true))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
+                moveSelection.setPosition(blackPawn7Position);
+                targetBoard.draw(moveSelection);
+            }
+            //blackPawn8Selection
+            if (!(blackPawn8.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                blackPawn8Selection = false;
+            }
+
+            if ((blackPawn8.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                blackPawn8Selection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (blackPawn8Selection = true))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
+                moveSelection.setPosition(blackPawn8Position);
+                targetBoard.draw(moveSelection);
+            }
+            //blackRook1Selection
+            if (!(blackRook1.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                blackRook1Selection = false;
+            }
+
+            if ((blackRook1.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                blackRook1Selection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (blackRook1Selection = true))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
+                moveSelection.setPosition(blackRook1Position);
+                targetBoard.draw(moveSelection);
+            }
+            //blackRook2Selection
+            if (!(blackRook2.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                blackRook2Selection = false;
+            }
+
+            if ((blackRook2.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                blackRook2Selection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (blackRook2Selection = true))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
+                moveSelection.setPosition(blackRook2Position);
+                targetBoard.draw(moveSelection);
+            }
+            //blackKnight1Selection
+            if (!(blackKnight1.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                blackKnight1Selection = false;
+            }
+
+            if ((blackKnight1.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                blackKnight1Selection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (blackKnight1Selection = true))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
+                moveSelection.setPosition(blackKnight1Position);
+                targetBoard.draw(moveSelection);
+            }
+            //blackKnight2Selection
+            if (!(blackKnight2.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                blackKnight2Selection = false;
+            }
+
+            if ((blackKnight2.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                blackKnight2Selection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (blackKnight2Selection = true))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
+                moveSelection.setPosition(blackKnight2Position);
+                targetBoard.draw(moveSelection);
+            }
+            //blackBishop1Selection
+            if (!(blackBishop1.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                blackBishop1Selection = false;
+            }
+
+            if ((blackBishop1.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                blackBishop1Selection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (blackBishop1Selection = true))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
+                moveSelection.setPosition(blackBishop1Position);
+                targetBoard.draw(moveSelection);
+            }
+            //blackBishop2Selection
+            if (!(blackBishop2.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                blackBishop2Selection = false;
+            }
+
+            if ((blackBishop2.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                blackBishop2Selection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (blackBishop2Selection = true))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
+                moveSelection.setPosition(blackBishop2Position);
+                targetBoard.draw(moveSelection);
+            }
+            //blackQueenSelection
+            if (!(blackQueen.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                blackQueenSelection = false;
+            }
+
+            if ((blackQueen.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                blackQueenSelection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (blackQueenSelection = true))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
+                moveSelection.setPosition(blackQueenPosition);
+                targetBoard.draw(moveSelection);
+            }
+            //blackKingSelection
+            if (!(blackKing.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                ++storedEventInstance;
+                blackKingSelection = false;
+            }
+
+            if ((blackKing.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
+            {
+                storedEventInstance = eventInstance;
+                blackKingSelection = true;
+            }
+
+            if ((storedEventInstance <= eventInstance) && (blackKingSelection = true))
+            {
+                sf::RectangleShape moveSelection(sf::Vector2f(100.f, 100.f));
+                moveSelection.setFillColor(sf::Color(255, 255, 0, 96));
+                moveSelection.setPosition(blackKingPosition);
                 targetBoard.draw(moveSelection);
             }
 
@@ -708,6 +1386,8 @@ int main()
 
             //display game
             targetBoard.display();
+            ++eventInstance;
+            ++storedEventInstance;
         }
     }
 

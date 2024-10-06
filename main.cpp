@@ -601,6 +601,9 @@ int main()
     sf::RectangleShape moveSelection31(sf::Vector2f(100.f, 100.f));
     sf::RectangleShape moveSelection32(sf::Vector2f(100.f, 100.f));
 
+    //piece selection ID
+    int pieceSelection = 0;
+
 
     /*------------------------------------------------------
        _____                        _                       
@@ -665,8 +668,6 @@ int main()
             sf::Vector2f cursorPositionFloat = static_cast<sf::Vector2f>(cursorPositionRaw);
 
                 //handle input for subsequent piece selection behaviour
-            int pieceSelection = 0;
-
             if ((whitePawn1.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
             {
                 pieceSelection = 1;
@@ -825,6 +826,11 @@ int main()
             else if ((blackKing.getGlobalBounds().contains(cursorPositionFloat)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true))
             {
                 pieceSelection = 32;
+            }
+
+            else if (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true)
+            {
+                pieceSelection = 0;
             }
 
                 //highlight selected piece

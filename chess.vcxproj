@@ -133,7 +133,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="class\assets.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="class\validMovement.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="class\assets.h" />
+    <ClInclude Include="class\validMovement.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
